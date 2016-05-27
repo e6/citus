@@ -65,7 +65,7 @@ COPY pg_temp.:"proxy_tablename" FROM stdin;
 4	sed do eiusmod
 5	tempor incididunt ut
 6	labore et dolore
-7	\N
+7
 8	magna aliqua
 \.
 \set VERBOSITY default

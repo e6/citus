@@ -147,10 +147,12 @@ ERROR:  cannot plan INSERT using row with NULL value in partition column
 -- INSERT violating column constraint
 INSERT INTO limit_orders VALUES (18811, 'BUD', 14962, '2014-04-05 08:32:16', 'sell',
 								 -5.00);
-ERROR:  could not modify any active placements
+ERROR:  integrity constraint violation on the worker node
+HINT:  Check the warning message above for details.
 -- INSERT violating primary key constraint
 INSERT INTO limit_orders VALUES (32743, 'LUV', 5994, '2001-04-16 03:37:28', 'buy', 0.58);
-ERROR:  could not modify any active placements
+ERROR:  integrity constraint violation on the worker node
+HINT:  Check the warning message above for details.
 SET client_min_messages TO DEFAULT;
 -- commands with non-constant partition values are unsupported
 INSERT INTO limit_orders VALUES (random() * 100, 'ORCL', 152, '2011-08-25 11:50:45',
@@ -259,25 +261,27 @@ SELECT kind, limit_price FROM limit_orders WHERE id = 246;
  buy  |        0.00
 (1 row)
 
+-- Test that on unique contraint violations, we fail fast
+INSERT INTO limit_orders VALUES (275, 'ADR', 140, '2007-07-02 16:32:15', 'sell', 43.67);
+INSERT INTO limit_orders VALUES (275, 'ADR', 140, '2007-07-02 16:32:15', 'sell', 43.67);
+WARNING:  remote message: duplicate key value violates unique constraint "limit_orders_pkey_103067"
+DETAIL:  Key (id)=(275) already exists.
+HINT:  Bad result from localhost:57638.
+ERROR:  integrity constraint violation on the worker node
+HINT:  Check the warning message above for details.
 -- Test that shards which miss a modification are marked unhealthy
--- First: Mark all placements for a node as inactive
-UPDATE pg_dist_shard_placement
-SET    shardstate = 3
-WHERE  nodename = 'localhost' AND
-	   nodeport = :worker_1_port;
--- Second: Perform an INSERT to the remaining node
-INSERT INTO limit_orders VALUES (275, 'ADR', 140, '2007-07-02 16:32:15', 'sell', 43.67);
--- Third: Mark the original placements as healthy again
-UPDATE pg_dist_shard_placement
-SET    shardstate = 1
-WHERE  nodename = 'localhost' AND
-	   nodeport = :worker_1_port;
--- Fourth: Perform the same INSERT (primary key violation)
-INSERT INTO limit_orders VALUES (275, 'ADR', 140, '2007-07-02 16:32:15', 'sell', 43.67);
-WARNING:  Bad result from localhost:57638
-DETAIL:  Remote message: duplicate key value violates unique constraint "limit_orders_pkey_103081"
--- Last: Verify the insert worked but the placement with the PK violation is now unhealthy
-SELECT count(*) FROM limit_orders WHERE id = 275;
+-- First: Connect to the second worker node
+\c - - - :worker_2_port
+-- Second: Drop limit_orders shard on the second worker node
+DROP TABLE limit_orders_103066;
+-- Third: Connect back to master node
+\c - - - :master_port
+-- Fourth: Perform an INSERT to the remaining node
+INSERT INTO limit_orders VALUES (276, 'ADR', 140, '2007-07-02 16:32:15', 'sell', 43.67);
+WARNING:  remote message: relation "limit_orders_103066" does not exist
+HINT:  Bad result from localhost:57638.
+-- Last: Verify the insert worked but the deleted placement is now unhealthy
+SELECT count(*) FROM limit_orders WHERE id = 276;
  count 
 -------
      1

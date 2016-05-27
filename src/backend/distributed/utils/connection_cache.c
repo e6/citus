@@ -192,28 +192,22 @@ PurgeConnection(PGconn *connection)
 
 /*
  * ReportRemoteError retrieves various error fields from the a remote result and
- * produces an error report at the WARNING level.
+ * produces an error report at the WARNING level. It also returns the error code.
  */
-void
+int
 ReportRemoteError(PGconn *connection, PGresult *result)
 {
 	char *sqlStateString = PQresultErrorField(result, PG_DIAG_SQLSTATE);
 	char *remoteMessage = PQresultErrorField(result, PG_DIAG_MESSAGE_PRIMARY);
+	char *remoteDetail = PQresultErrorField(result, PG_DIAG_MESSAGE_DETAIL);
 	char *nodeName = ConnectionGetOptionValue(connection, "host");
 	char *nodePort = ConnectionGetOptionValue(connection, "port");
-	char *errorPrefix = "Connection failed to";
 	int sqlState = ERRCODE_CONNECTION_FAILURE;
 
 	if (sqlStateString != NULL)
 	{
 		sqlState = MAKE_SQLSTATE(sqlStateString[0], sqlStateString[1], sqlStateString[2],
 								 sqlStateString[3], sqlStateString[4]);
-
-		/* use more specific error prefix for result failures */
-		if (sqlState != ERRCODE_CONNECTION_FAILURE)
-		{
-			errorPrefix = "Bad result from";
-		}
 	}
 
 	/*
@@ -234,9 +228,31 @@ ReportRemoteError(PGconn *connection, PGresult *result)
 		}
 	}
 
-	ereport(WARNING, (errcode(sqlState),
-					  errmsg("%s %s:%s", errorPrefix, nodeName, nodePort),
-					  errdetail("Remote message: %s", remoteMessage)));
+	/* use diffent warning messages for different error types */
+	if (sqlState == ERRCODE_CONNECTION_FAILURE)
+	{
+		ereport(WARNING, (errcode(sqlState),
+						  errmsg("connection failed to %s:%s", nodeName, nodePort),
+						  errdetail("%s", remoteMessage)));
+	}
+	else
+	{
+		if (remoteDetail == NULL)
+		{
+			ereport(WARNING, (errcode(sqlState),
+							  errmsg("remote message: %s", remoteMessage),
+							  errhint("Bad result from %s:%s.", nodeName, nodePort)));
+		}
+		else
+		{
+			ereport(WARNING, (errcode(sqlState),
+							  errmsg("remote message: %s", remoteMessage),
+							  errdetail("%s", remoteDetail),
+							  errhint("Bad result from %s:%s.", nodeName, nodePort)));
+		}
+	}
+
+	return sqlState;
 }
 
 

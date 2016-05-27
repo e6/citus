@@ -267,7 +267,18 @@ ExecuteDistributedModify(Task *task)
 		result = PQexec(connection, task->queryString);
 		if (PQresultStatus(result) != PGRES_COMMAND_OK)
 		{
-			ReportRemoteError(connection, result);
+			int errorCode = ReportRemoteError(connection, result);
+
+			/* check if the error code is in integrity constraint violation class */
+			if (ERRCODE_TO_CATEGORY(ERRCODE_INTEGRITY_CONSTRAINT_VIOLATION) ==
+				ERRCODE_TO_CATEGORY(errorCode))
+			{
+				ereport(ERROR, (errcode(errorCode),
+								errmsg("integrity constraint violation on the "
+									   "worker node"),
+								errhint("Check the warning message above for details.")));
+			}
+
 			PQclear(result);
 
 			failedPlacementList = lappend(failedPlacementList, taskPlacement);
