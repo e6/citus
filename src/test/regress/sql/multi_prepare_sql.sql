@@ -2,6 +2,9 @@
 -- MULTI_PREPARE_SQL
 --
 
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 790000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 69000;
+
 -- Tests covering PREPARE statements. Many of the queries are
 -- taken from other regression test files and converted into
 -- prepared statements.

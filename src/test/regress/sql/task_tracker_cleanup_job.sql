@@ -2,6 +2,9 @@
 -- TASK_TRACKER_CLEANUP_JOB
 --
 
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 1060000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 96000;
+
 \set JobId 401010
 \set CompletedTaskId 801107
 \set RunningTaskId 801108

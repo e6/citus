@@ -1,7 +1,8 @@
 -- ===================================================================
 -- test router planner functionality for single shard select queries
 -- ===================================================================
-ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 103300;
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 840000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 74000;
 
 
 CREATE TABLE articles_hash (

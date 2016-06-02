@@ -1,6 +1,10 @@
 --
 -- MULTI_TABLE_DDL
 --
+
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 870000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 77000;
+
 -- Tests around changing the schema and dropping of a distributed table
 
 CREATE TABLE testtableddl(somecol int, distributecol text NOT NULL);

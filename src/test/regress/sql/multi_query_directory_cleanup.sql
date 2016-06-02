@@ -2,6 +2,9 @@
 -- MULTI_QUERY_DIRECTORY_CLEANUP
 --
 
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 810000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 71000;
+
 -- We execute sub-queries on worker nodes, and copy query results to a directory
 -- on the master node for final processing. When the query completes or fails,
 -- the resource owner should automatically clean up these intermediate query

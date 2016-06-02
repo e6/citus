@@ -2,6 +2,9 @@
 -- MULTI_LARGE_TABLE_TASK_ASSIGNMENT
 --
 
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 710000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 61000;
+
 -- Tests which cover task assignment for MapMerge jobs for single range repartition
 -- and dual hash repartition joins. The tests also cover task assignment propagation
 -- from a sql task to its depended tasks. Note that we set the executor type to task

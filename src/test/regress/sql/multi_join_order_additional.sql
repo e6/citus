@@ -2,6 +2,9 @@
 -- MULTI_JOIN_ORDER_ADDITIONAL
 --
 
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 650000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 55000;
+
 -- Set configuration to print table join order and pruned shards
 
 SET citus.explain_distributed_queries TO off;

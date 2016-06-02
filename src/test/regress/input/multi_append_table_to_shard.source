@@ -2,6 +2,10 @@
 -- MULTI_APPEND_TABLE_TO_SHARD
 --
 -- Initialize tables to join
+
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 230000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 13000;
+
 CREATE TABLE multi_append_table_to_shard_right
 (
 	right_number INTEGER not null,

@@ -2,6 +2,9 @@
 -- create test functions and types needed for tests
 -- ===================================================================
 
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 370000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 27000;
+
 CREATE FUNCTION sort_names(cstring, cstring, cstring)
 	RETURNS cstring
 	AS 'citus'

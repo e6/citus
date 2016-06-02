@@ -2,6 +2,9 @@
 -- test end-to-end query functionality
 -- ===================================================================
 
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 850000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 75000;
+
 CREATE TABLE articles (
 	id bigint NOT NULL,
 	author_id bigint NOT NULL,

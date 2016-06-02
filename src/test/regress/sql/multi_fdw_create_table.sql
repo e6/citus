@@ -5,6 +5,9 @@
 -- Create new table definitions for use in testing in distributed foreign data
 -- wrapper functionality.
 
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 590000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 49000;
+
 SELECT fdwname FROM pg_foreign_data_wrapper;
 
 CREATE SERVER file_server FOREIGN DATA WRAPPER file_fdw;

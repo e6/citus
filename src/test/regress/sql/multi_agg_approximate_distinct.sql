@@ -2,6 +2,9 @@
 -- MULTI_AGG_APPROXIMATE_DISTINCT
 --
 
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 340000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 24000;
+
 -- Try to execute count(distinct) when approximate distincts aren't enabled
 
 SELECT count(distinct l_orderkey) FROM lineitem;

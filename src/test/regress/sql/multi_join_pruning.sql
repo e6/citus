@@ -2,6 +2,8 @@
 -- MULTI_JOIN_PRUNING
 --
 
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 58000;
+
 -- Check that join-pruning works for joins between two large relations. For now
 -- we only check for join-pruning between locally partitioned relations. In the
 -- future we want to check for pruning between re-partitioned relations as well.

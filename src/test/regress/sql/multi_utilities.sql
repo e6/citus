@@ -2,6 +2,9 @@
 -- test utility statement functionality
 -- ===================================================================
 
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 990000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 89000;
+
 CREATE TABLE sharded_table ( name text, id bigint );
 SELECT master_create_distributed_table('sharded_table', 'id', 'hash');
 SELECT master_create_worker_shards('sharded_table', 2, 1);

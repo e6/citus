@@ -2,6 +2,9 @@
 -- MULTI_LARGE_TABLE_PLANNING
 --
 
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 690000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 59000;
+
 -- Tests that cover large table join planning. Note that we explicitly start a
 -- transaction block here so that we don't emit debug messages with changing
 -- transaction ids in them. Also, we set the executor type to task tracker

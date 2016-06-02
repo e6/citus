@@ -1,6 +1,8 @@
 --
 -- MULTI_SINGLE_RELATION_SUBQUERY
 --
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 860000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 76000;
 -- This test checks that we are able to run selected set of distributed SQL subqueries.
 SET citus.task_executor_type TO 'task-tracker';
 select

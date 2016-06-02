@@ -2,6 +2,9 @@
 -- MULTI_PARTITION_PRUNING
 --
 
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 770000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 67000;
+
 -- Tests to verify that we correctly prune unreferenced shards. For this, we
 -- need to increase the logging verbosity of messages displayed on the client.
 

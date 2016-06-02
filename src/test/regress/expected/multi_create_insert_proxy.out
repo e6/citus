@@ -1,6 +1,8 @@
 -- ===================================================================
 -- test INSERT proxy creation functionality
 -- ===================================================================
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 380000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 28000;
 -- use transaction to permit multiple calls to proxy function in one session
 BEGIN;
 -- use "unorthodox" object names to test quoting

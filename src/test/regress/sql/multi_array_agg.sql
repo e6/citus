@@ -2,6 +2,9 @@
 -- MULTI_ARRAY_AGG
 --
 
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 520000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 42000;
+
 -- Check multi_cat_agg() aggregate which is used to implement array_agg()
 
 SELECT array_cat_agg(i) FROM (VALUES (ARRAY[1,2]), (NULL), (ARRAY[3,4])) AS t(i);

@@ -2,6 +2,9 @@
 -- MULTI_EXPLAIN
 --
 
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 570000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 47000;
+
 \a\t
 
 SET citus.task_executor_type TO 'real-time';

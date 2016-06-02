@@ -2,6 +2,9 @@
 -- MULTI_INDEX_STATEMENTS
 --
 
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 640000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 54000;
+
 -- Check that we can run CREATE INDEX and DROP INDEX statements on distributed
 -- tables.
 

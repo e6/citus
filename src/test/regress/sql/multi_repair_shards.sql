@@ -2,6 +2,9 @@
 -- test shard repair functionality
 -- ===================================================================
 
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 820000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 72000;
+
 -- create a table and create its distribution metadata
 CREATE TABLE customer_engagements ( id integer, created_at date, event_data text );
 

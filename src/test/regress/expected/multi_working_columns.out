@@ -1,6 +1,8 @@
 --
 -- MULTI_WORKING_COLUMNS
 --
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 1040000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 94000;
 -- Columns that are used in sorting and grouping but that do not appear in the
 -- projection order are called working (resjunk) columns. We check in here that
 -- these columns are pulled to the master, and are correctly used in sorting and

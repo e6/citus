@@ -2,6 +2,9 @@
 -- MULTI_FDW_MASTER_PROTOCOL
 --
 
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 600000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 50000;
+
 -- Tests that check the metadata returned by the master node.
 
 SELECT part_storage_type, part_key, part_replica_count, part_max_size,

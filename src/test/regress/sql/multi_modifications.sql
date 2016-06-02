@@ -2,6 +2,9 @@
 -- test end-to-end modification functionality
 -- ===================================================================
 
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 750000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 65000;
+
 CREATE TYPE order_side AS ENUM ('buy', 'sell');
 
 CREATE TABLE limit_orders (

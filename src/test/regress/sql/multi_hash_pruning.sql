@@ -2,6 +2,9 @@
 -- MULTI_HASH_PRUNING
 --
 
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 630000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 53000;
+
 -- Tests for shard and join pruning logic on hash partitioned tables.
 
 -- Create a table partitioned on integer column and update partition type to

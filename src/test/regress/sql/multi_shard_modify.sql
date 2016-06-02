@@ -3,6 +3,7 @@
 --
 
 ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 350000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 25000;
 
 -- Create a new hash partitioned multi_shard_modify_test table and stage data into it.
 CREATE TABLE multi_shard_modify_test (

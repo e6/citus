@@ -2,6 +2,9 @@
 -- MULTI_TASK_ASSIGNMENT
 --
 
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 880000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 78000;
+
 SET citus.explain_distributed_queries TO off;
 
 -- Check that our policies for assigning tasks to worker nodes run as expected.

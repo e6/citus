@@ -1,6 +1,8 @@
 -- ===================================================================
 -- create test functions
 -- ===================================================================
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 610000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 51000;
 CREATE FUNCTION table_ddl_command_array(regclass)
 	RETURNS text[]
 	AS 'citus'

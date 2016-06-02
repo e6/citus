@@ -2,6 +2,9 @@
 -- WORKER_CREATE_TABLE
 --
 
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 1110000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 101000;
+
 -- Create new table definitions for lineitem and supplier tables to test worker
 -- node execution logic. For now,the tests include range and hash partitioning
 -- of existing tables.

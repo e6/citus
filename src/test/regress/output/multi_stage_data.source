@@ -1,6 +1,8 @@
 --
 -- MULTI_STAGE_DATA
 --
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 290000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 19000;
 -- Tests for staging data in a distributed cluster. Please note that the number
 -- of shards uploaded depends on two config values: citus.shard_replication_factor and
 -- citus.shard_max_size. These values are set in pg_regress_multi.pl. Shard placement

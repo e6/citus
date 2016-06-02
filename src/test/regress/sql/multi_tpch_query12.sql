@@ -2,6 +2,9 @@
 -- MULTI_TPCH_QUERY12
 --
 
+ALTER SEQUENCE pg_catalog.pg_dist_shardid_seq RESTART 910000;
+ALTER SEQUENCE pg_catalog.pg_dist_jobid_seq RESTART 81000;
+
 -- Change configuration to treat lineitem and orders tables as large
 
 SET citus.large_table_shard_count TO 2;
