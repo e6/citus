@@ -447,6 +447,7 @@ UpdateShardStatistics(int64 shardId)
 	ShardInterval *shardInterval = LoadShardInterval(shardId);
 	Oid relationId = shardInterval->relationId;
 	char storageType = shardInterval->storageType;
+	char partitionType = PartitionMethod(relationId);
 	char *shardQualifiedName = NULL;
 	List *shardPlacementList = NIL;
 	ListCell *shardPlacementCell = NULL;
@@ -516,8 +517,12 @@ UpdateShardStatistics(int64 shardId)
 								workerName, workerPort);
 	}
 
-	DeleteShardRow(shardId);
-	InsertShardRow(relationId, shardId, storageType, minValue, maxValue);
+	/* don't update shard min/max values for hash-partitoned tables */
+	if (partitionType != DISTRIBUTE_BY_HASH)
+	{
+		DeleteShardRow(shardId);
+		InsertShardRow(relationId, shardId, storageType, minValue, maxValue);
+	}
 
 	if (QueryCancelPending)
 	{

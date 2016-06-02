@@ -107,6 +107,15 @@ SELECT count(*) FROM customer_copy_hash;
 -- Confirm that data was copied
 SELECT count(*) FROM customer_copy_hash;
 
+-- Make sure that master_update_shard_statistics() only updates shard length for
+-- hash-partitioned tables
+SELECT master_update_shard_statistics(560000);
+
+SELECT shardid, shardminvalue, shardmaxvalue FROM pg_dist_shard WHERE shardid = 560000;
+
+SELECT shardid, shardlength FROM pg_dist_shard_placement WHERE shardid = 560000;
+
+
 -- Create a new hash-partitioned table with default now() function
 CREATE TABLE customer_with_default(
         c_custkey integer,

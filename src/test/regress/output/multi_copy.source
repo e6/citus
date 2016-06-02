@@ -125,6 +125,26 @@ SELECT count(*) FROM customer_copy_hash;
   2006
 (1 row)
 
+-- Make sure that master_update_shard_statistics() only updates shard length for
+-- hash-partitioned tables
+SELECT master_update_shard_statistics(560000);
+ master_update_shard_statistics 
+--------------------------------
+                           8192
+(1 row)
+
+SELECT shardid, shardminvalue, shardmaxvalue FROM pg_dist_shard WHERE shardid = 560000;
+ shardid | shardminvalue | shardmaxvalue 
+---------+---------------+---------------
+  560000 | -2147483648   | -2080374785
+(1 row)
+
+SELECT shardid, shardlength FROM pg_dist_shard_placement WHERE shardid = 560000;
+ shardid | shardlength 
+---------+-------------
+  560000 |        8192
+(1 row)
+
 -- Create a new hash-partitioned table with default now() function
 CREATE TABLE customer_with_default(
         c_custkey integer,
