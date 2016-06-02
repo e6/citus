@@ -264,9 +264,8 @@ SELECT kind, limit_price FROM limit_orders WHERE id = 246;
 -- Test that on unique contraint violations, we fail fast
 INSERT INTO limit_orders VALUES (275, 'ADR', 140, '2007-07-02 16:32:15', 'sell', 43.67);
 INSERT INTO limit_orders VALUES (275, 'ADR', 140, '2007-07-02 16:32:15', 'sell', 43.67);
-WARNING:  remote message: duplicate key value violates unique constraint "limit_orders_pkey_103067"
+WARNING:  remote message from localhost:57638: duplicate key value violates unique constraint "limit_orders_pkey_103067"
 DETAIL:  Key (id)=(275) already exists.
-HINT:  Bad result from localhost:57638.
 ERROR:  integrity constraint violation on the worker node
 HINT:  Check the warning message above for details.
 -- Test that shards which miss a modification are marked unhealthy
@@ -278,8 +277,7 @@ DROP TABLE limit_orders_103066;
 \c - - - :master_port
 -- Fourth: Perform an INSERT to the remaining node
 INSERT INTO limit_orders VALUES (276, 'ADR', 140, '2007-07-02 16:32:15', 'sell', 43.67);
-WARNING:  remote message: relation "limit_orders_103066" does not exist
-HINT:  Bad result from localhost:57638.
+WARNING:  remote message from localhost:57638: relation "limit_orders_103066" does not exist
 -- Last: Verify the insert worked but the deleted placement is now unhealthy
 SELECT count(*) FROM limit_orders WHERE id = 276;
  count 

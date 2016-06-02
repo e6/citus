@@ -240,15 +240,15 @@ ReportRemoteError(PGconn *connection, PGresult *result)
 		if (remoteDetail == NULL)
 		{
 			ereport(WARNING, (errcode(sqlState),
-							  errmsg("remote message: %s", remoteMessage),
-							  errhint("Bad result from %s:%s.", nodeName, nodePort)));
+							  errmsg("remote message from %s:%s: %s", nodeName,
+									 nodePort, remoteMessage)));
 		}
 		else
 		{
 			ereport(WARNING, (errcode(sqlState),
-							  errmsg("remote message: %s", remoteMessage),
-							  errdetail("%s", remoteDetail),
-							  errhint("Bad result from %s:%s.", nodeName, nodePort)));
+							  errmsg("remote message from %s:%s: %s", nodeName,
+									 nodePort, remoteMessage),
+							  errdetail("%s", remoteDetail)));
 		}
 	}
 
