@@ -517,8 +517,8 @@ UpdateShardStatistics(int64 shardId)
 								workerName, workerPort);
 	}
 
-	/* don't update shard min/max values for hash-partitoned tables */
-	if (partitionType != DISTRIBUTE_BY_HASH)
+	/* only update shard min/max values for append-partitioned tables */
+	if (partitionType == DISTRIBUTE_BY_APPEND)
 	{
 		DeleteShardRow(shardId);
 		InsertShardRow(relationId, shardId, storageType, minValue, maxValue);

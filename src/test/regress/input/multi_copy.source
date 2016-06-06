@@ -201,6 +201,24 @@ FROM customer_copy_range WHERE c_custkey <= 500;
 -- Check whether data was copied
 SELECT count(*) FROM customer_copy_range;
 
+-- Manipulate min/max values and check shard statistics for new shard
+UPDATE pg_dist_shard SET shardminvalue = 1501, shardmaxvalue = 2000
+WHERE shardid = :new_shard_id;
+
+SELECT shardid, shardminvalue, shardmaxvalue FROM pg_dist_shard WHERE shardid = :new_shard_id;
+SELECT shardid, shardlength FROM pg_dist_shard_placement WHERE shardid = :new_shard_id;
+
+-- Update shard statistics for range-partitioned shard and check that only the
+-- shard length is updated.
+SELECT master_update_shard_statistics(:new_shard_id);
+
+SELECT shardid, shardminvalue, shardmaxvalue FROM pg_dist_shard WHERE shardid = :new_shard_id;
+SELECT shardid, shardlength FROM pg_dist_shard_placement WHERE shardid = :new_shard_id;
+
+-- Revert back min/max value updates
+UPDATE pg_dist_shard SET shardminvalue = 501, shardmaxvalue = 1000
+WHERE shardid = :new_shard_id;
+
 -- Create a new append-partitioned table into which to COPY
 CREATE TABLE customer_copy_append (
         c_custkey integer,
