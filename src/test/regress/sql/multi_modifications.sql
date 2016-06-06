@@ -196,7 +196,7 @@ INSERT INTO limit_orders VALUES (275, 'ADR', 140, '2007-07-02 16:32:15', 'sell',
 \c - - - :worker_2_port
 
 -- Second: Drop limit_orders shard on the second worker node
-DROP TABLE limit_orders_103066;
+DROP TABLE limit_orders_103080;
 
 -- Third: Connect back to master node
 \c - - - :master_port
