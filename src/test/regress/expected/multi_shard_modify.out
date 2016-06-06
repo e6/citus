@@ -36,10 +36,6 @@ SELECT master_modify_multiple_shards('DELETE FROM multi_shard_modify_test WHERE 
 ERROR:  functions used in modification queries on distributed tables must be marked IMMUTABLE
 SELECT master_modify_multiple_shards('DELETE FROM multi_shard_modify_test WHERE t_value = (random() * 1000)');
 ERROR:  functions used in modification queries on distributed tables must be marked IMMUTABLE
--- commands with stable functions in their quals
-CREATE FUNCTION temp_stable_func() RETURNS integer AS 'SELECT 10;' LANGUAGE SQL STABLE;
-SELECT master_modify_multiple_shards('DELETE FROM multi_shard_modify_test WHERE t_key = temp_stable_func()');
-ERROR:  functions used in modification queries on distributed tables must be marked IMMUTABLE
 -- commands with immutable functions in their quals
 SELECT master_modify_multiple_shards('DELETE FROM multi_shard_modify_test WHERE t_key = abs(-3)');
  master_modify_multiple_shards 

@@ -289,6 +289,8 @@ ExecuteDistributedModify(Query *query, Task *task)
 
 	ExecuteFunctions(query);
 	DeparseShardQuery(query, task, queryString);
+	elog(DEBUG4, "old query: %s", task->queryString);
+	elog(DEBUG4, "new query: %s", queryString->data);
 
 	foreach(taskPlacementCell, task->taskPlacementList)
 	{
